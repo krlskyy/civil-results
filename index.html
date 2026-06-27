@@ -52,6 +52,7 @@ body{
   -webkit-font-smoothing: antialiased;
 }
 .wrap{ max-width: 860px; margin: 0 auto; padding: 0 24px; }
+.wrap.content{ padding-top: 36px; }
 a{ color: inherit; }
 b{ color: var(--gold-bright); font-weight:600; }
 strong{ color: var(--text-primary); }
@@ -73,7 +74,7 @@ strong{ color: var(--text-primary); }
 .nav-id-link:hover{ color: var(--accent-hover); }
 
 .hero{
-  padding: 80px 24px 56px;
+  padding: 80px 24px 44px;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -166,17 +167,45 @@ footer.site-footer{ text-align:center; margin-top:56px; padding-bottom: 56px; co
   background: var(--bg-surface); border:1px solid var(--border); border-radius: var(--radius-lg);
   padding: 22px 26px; margin-bottom:14px; cursor:pointer;
   transition: border-color .18s, transform .18s, box-shadow .18s;
-  font-family: inherit; color: inherit;
+  font-family: inherit; color: inherit; position: relative;
 }
 .week-card:hover{ border-color: var(--accent-border); transform: translateY(-2px); box-shadow: 0 14px 28px rgba(0,0,0,0.3); }
-.week-card.featured{ border-color: var(--gold-soft); background: linear-gradient(135deg, rgba(212,175,106,0.06), var(--bg-surface) 60%); }
-.week-card .wc-top{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px; gap:12px; }
+
+.week-card.featured{
+  border: 1px solid rgba(212,175,106,0.4);
+  background: linear-gradient(160deg, rgba(212,175,106,0.09), var(--bg-surface) 55%);
+  padding: 26px 28px;
+  box-shadow: 0 0 0 1px rgba(212,175,106,0.08), 0 18px 40px -12px rgba(212,175,106,0.18);
+}
+.week-card.featured::before{
+  content:""; position:absolute; top:0; left:24px; right:24px; height:1px;
+  background: linear-gradient(90deg, transparent, var(--gold-bright), transparent);
+}
+.week-card.featured:hover{
+  border-color: rgba(212,175,106,0.65);
+  box-shadow: 0 0 0 1px rgba(212,175,106,0.14), 0 22px 48px -10px rgba(212,175,106,0.28);
+  transform: translateY(-3px);
+}
+
+.week-card .wc-top{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px; gap:12px; flex-wrap:wrap; }
 .week-card .wc-period{ font-family: var(--font-display); font-weight:700; font-size:19px; }
-.week-card .wc-rank{ font-family: var(--font-mono); font-size:12px; color: var(--gold); white-space:nowrap; }
-.week-card .wc-summary{ font-size:13.5px; color: var(--text-secondary); margin-bottom:14px; }
-.week-card .wc-meta{ display:flex; gap:18px; font-size:12px; color: var(--text-muted); align-items:center; }
+.week-card .wc-rank{ font-family: var(--font-mono); font-size:11.5px; color: var(--gold); white-space:nowrap; background: var(--gold-soft); padding:4px 10px; border-radius:100px; border: 1px solid rgba(212,175,106,0.25); }
+.week-card .wc-summary{ font-size:13.5px; color: var(--text-secondary); margin-bottom:18px; line-height:1.5; }
+
+.week-card .wc-meta{ display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap; padding-top:16px; border-top: 1px solid rgba(255,255,255,0.06); }
+.week-card .wc-meta-left{ display:flex; gap:18px; font-size:12px; color: var(--text-muted); align-items:center; flex-wrap:wrap; }
+.week-card .wc-meta-left.compact{ border-top:none; padding-top:0; }
 .week-card .wc-meta b{ color: var(--text-secondary); font-weight:600; }
-.week-card .wc-arrow{ float:right; color: var(--text-muted); transition: transform .15s, color .15s; }
+.week-card .wc-cta{
+  display:inline-flex; align-items:center; gap:6px;
+  font-size:12.5px; font-weight:600; color: var(--accent-hover);
+  white-space:nowrap;
+}
+.week-card.featured .wc-cta{ color: var(--gold-bright); }
+.week-card .wc-cta svg{ transition: transform .15s; }
+.week-card:hover .wc-cta svg{ transform: translateX(3px); }
+
+.week-card .wc-arrow{ position:absolute; top:24px; right:24px; color: var(--text-muted); transition: transform .15s, color .15s; }
 .week-card:hover .wc-arrow{ transform: translateX(3px); color: var(--accent-hover); }
 
 .empty-archive{ text-align:center; padding:40px 20px; color: var(--text-muted); border:1px dashed var(--border); border-radius: var(--radius-md); font-size:13.5px; }
@@ -195,7 +224,7 @@ footer.site-footer{ text-align:center; margin-top:56px; padding-bottom: 56px; co
 #view-archive.active, #view-detail.active{ display:block; }
 
 @media (max-width: 600px){
-  .wrap{ padding: 0 16px; }
+  .wrap{ padding-left: 16px; padding-right: 16px; }
   .stat-grid{ grid-template-columns: 1fr 1fr; }
   .hero{ padding: 48px 16px 36px; }
   .topnav{ padding: 14px 16px; }
@@ -232,7 +261,7 @@ footer.site-footer{ text-align:center; margin-top:56px; padding-bottom: 56px; co
   </div>
 </div>
 
-<div class="wrap">
+<div class="wrap content">
 
   <div id="view-archive">
     <section id="featured-section"></section>
@@ -300,13 +329,15 @@ footer.site-footer{ text-align:center; margin-top:56px; padding-bottom: 56px; co
         <div class="week-card featured" onclick="openWeek('${featured.id}')">
           <div class="wc-top">
             <span class="wc-period">${featured.periodLabel}</span>
-            <span class="wc-rank">${featured.rankAmongSegments ? featured.rankAmongSegments + ' результат сегмента' : ''}</span>
+            ${featured.rankAmongSegments ? `<span class="wc-rank">${featured.rankAmongSegments} результат сегмента</span>` : ''}
           </div>
           <div class="wc-summary">${md(featured.summary)}</div>
           <div class="wc-meta">
-            <span><b>${featured.segmentBudget}</b> BWC сегмент</span>
-            ${topAssistant ? `<span>${medalSvg('gold')} <b>${topAssistant.name}</b></span>` : ''}
-            <span style="margin-left:auto;">Подробнее →</span>
+            <div class="wc-meta-left">
+              <span><b>${featured.segmentBudget}</b> BWC сегмент</span>
+              ${topAssistant ? `<span>${medalSvg('gold')} <b>${topAssistant.name}</b></span>` : ''}
+            </div>
+            <span class="wc-cta">Подробнее<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
           </div>
         </div>
       `;
@@ -322,12 +353,12 @@ footer.site-footer{ text-align:center; margin-top:56px; padding-bottom: 56px; co
         const top = r.assistants.find(a => a.rank === 'gold');
         return `
           <div class="week-card" onclick="openWeek('${r.id}')">
-            <span class="wc-arrow">→</span>
+            <span class="wc-arrow"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
             <div class="wc-top">
               <span class="wc-period">${formatPeriodShort(r.periodLabel)}</span>
-              <span class="wc-rank">${r.rankAmongSegments ? r.rankAmongSegments + ' среди сегментов' : ''}</span>
+              ${r.rankAmongSegments ? `<span class="wc-rank">${r.rankAmongSegments} среди сегментов</span>` : ''}
             </div>
-            <div class="wc-meta">
+            <div class="wc-meta-left compact">
               <span><b>${r.segmentBudget}</b> BWC</span>
               ${top ? `<span>${medalSvg('gold')} <b>${top.name}</b></span>` : ''}
             </div>
