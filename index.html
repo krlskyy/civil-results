@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Civil Results — итоги Civil Team</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23C81E4D' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-base: #0A0A0C;
+  --bg-surface: #131316;
+  --bg-surface-raised: #1A1A1E;
+  --border: #232328;
+  --border-soft: #1C1C20;
+  --text-primary: #E8E6E3;
+  --text-secondary: #ABA9A6;
+  --text-muted: #6E6C72;
+
+  --accent: #C81E4D;
+  --accent-hover: #E2386A;
+  --accent-soft: rgba(200,30,77,0.12);
+  --accent-border: rgba(200,30,77,0.35);
+
+  --gold: #D4AF6A;
+  --gold-bright: #E8C887;
+  --gold-soft: rgba(212,175,106,0.12);
+  --silver: #B9C0C7;
+  --bronze: #B5793A;
+
+  --danger: #E5484D;
+  --role-manager: #2F9E7A;
+
+  --font-display: 'Fraunces', serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ scroll-behavior: smooth; }
+body{
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap{ max-width: 860px; margin: 0 auto; padding: 0 24px; }
+.wrap.content{ padding-top: 36px; }
+a{ color: inherit; }
+b{ color: var(--gold-bright); font-weight:600; }
+strong{ color: var(--text-primary); }
+
+.topnav{
+  position: sticky; top:0; z-index: 50;
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 16px 24px;
+  background: rgba(10,10,12,0.78);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-soft);
+}
+.topnav .brand{ display:flex; align-items:center; gap:10px; font-family: var(--font-display); font-weight:600; font-size: 17px; text-decoration:none; cursor:pointer; background:none; border:none; color:inherit; }
+.topnav .brand .mark{ width:26px; height:26px; border-radius:8px; background: linear-gradient(135deg, var(--gold-bright), var(--gold) 60%, #a8794a); display:flex; align-items:center; justify-content:center; font-size:13px; box-shadow: 0 4px 14px rgba(212,175,106,0.3); }
+.nav-back{ font-size:13px; color: var(--text-secondary); cursor:pointer; display:flex; align-items:center; gap:6px; transition: color .15s; background:none; border:none; font-family: inherit; }
+.nav-back:hover{ color: var(--accent-hover); }
+.nav-back.hidden{ visibility:hidden; }
+.nav-id-link{ font-size:13px; color: var(--text-secondary); text-decoration:none; }
+.nav-id-link:hover{ color: var(--accent-hover); }
+
+.hero{
+  padding: 80px 24px 44px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border-soft);
+}
+.hero::before{
+  content:"";
+  position:absolute; top:-220px; left:50%; transform:translateX(-50%);
+  width:800px; height:420px;
+  background: radial-gradient(ellipse at center, rgba(212,175,106,0.1), transparent 70%);
+  pointer-events:none;
+}
+.hero .wrap{ position:relative; }
+.eyebrow{
+  display:inline-flex; align-items:center; gap:8px;
+  font-family: var(--font-mono); font-size:12px; letter-spacing:0.16em; text-transform:uppercase;
+  color: var(--gold); opacity:0.9; margin-bottom: 18px;
+}
+.eyebrow .dot{ width:6px; height:6px; border-radius:50%; background: var(--gold); }
+.hero h1{
+  font-family: var(--font-display); font-weight: 800;
+  font-size: clamp(36px, 6.5vw, 56px);
+  letter-spacing: -0.01em; line-height:1.04;
+  background: linear-gradient(135deg, var(--gold-bright), var(--gold) 60%, #a8794a);
+  -webkit-background-clip: text; background-clip:text; color:transparent;
+}
+.hero .subtitle{ margin-top:14px; color: var(--text-secondary); font-size:15px; }
+
+section{ margin-bottom: 44px; }
+.section-head{ display:flex; align-items:baseline; gap:12px; margin-bottom:18px; }
+.section-head .icon{ display:inline-flex; align-items:center; color: var(--gold); }
+.section-head .icon svg{ width:20px; height:20px; }
+.section-head h2{ font-family: var(--font-display); font-size:22px; font-weight:700; }
+.section-head .rule{ flex:1; height:1px; background: linear-gradient(to right, var(--border), transparent); }
+
+.card{
+  background: var(--bg-surface); border:1px solid var(--border); border-radius: var(--radius-md);
+  padding: 22px 26px;
+}
+.note{
+  background: var(--accent-soft); border-left: 3px solid var(--accent-border);
+  padding: 14px 20px; border-radius: 0 10px 10px 0;
+  font-size: 14.5px; color: var(--text-secondary); margin-top:14px;
+}
+
+.stat-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:14px; }
+.stat-box{ background: var(--bg-surface); border:1px solid var(--border); border-radius: var(--radius-md); padding:20px 16px; text-align:center; }
+.stat-box .v{ font-family: var(--font-display); font-weight:800; font-size:28px; color: var(--gold-bright); }
+.stat-box .l{ font-size:12px; color: var(--text-secondary); margin-top:4px; }
+
+ul.points{ list-style:none; padding:0; }
+ul.points li{ padding-left:22px; position:relative; margin-bottom:12px; font-size:14.5px; }
+ul.points li::before{ content:"—"; position:absolute; left:0; color: var(--gold); }
+
+.assistant{
+  background: var(--bg-surface); border:1px solid var(--border); border-radius: var(--radius-md);
+  padding: 22px 24px; margin-bottom:16px; position:relative; overflow:hidden;
+}
+.assistant::before{ content:""; position:absolute; top:0; left:0; width:4px; height:100%; }
+.assistant.gold::before{ background: linear-gradient(to bottom, var(--gold-bright), var(--gold)); }
+.assistant.silver::before{ background: linear-gradient(to bottom, #d4dade, var(--silver)); }
+.assistant.bronze::before{ background: linear-gradient(to bottom, #c98f53, var(--bronze)); }
+.a-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+.a-name{ font-family: var(--font-mono); font-size:16px; font-weight:600; }
+.a-rank{ font-size:13px; color: var(--text-secondary); }
+.a-text{ font-size:14.5px; color: var(--text-secondary); margin-bottom:16px; }
+.bwc-bar-track{ background: rgba(255,255,255,0.06); border-radius:8px; height:10px; overflow:hidden; margin-bottom:8px; }
+.bwc-bar-fill{ height:100%; border-radius:8px; background: linear-gradient(to right, var(--gold), var(--gold-bright)); }
+.bwc-label{ display:flex; justify-content:space-between; font-size:12.5px; color: var(--text-secondary); }
+.bwc-label .amt{ font-family: var(--font-mono); color: var(--gold-bright); font-weight:600; }
+
+table{ width:100%; border-collapse:collapse; font-size:14.5px; }
+table th{ text-align:left; font-size:11.5px; text-transform:uppercase; letter-spacing:0.06em; color: var(--text-secondary); padding-bottom:10px; border-bottom:1px solid var(--border); }
+table td{ padding:12px 0; border-bottom:1px solid var(--border); }
+table tr:last-child td{ border-bottom:none; font-weight:700; color: var(--gold-bright); padding-top:16px; }
+table td.num{ text-align:right; font-family: var(--font-mono); }
+
+footer.site-footer{ text-align:center; margin-top:56px; padding-bottom: 56px; color: var(--text-muted); font-size:12px; font-family: var(--font-mono); letter-spacing:0.04em; }
+
+.current-banner{
+  display:flex; align-items:center; gap:8px;
+  font-family: var(--font-mono); font-size:11px; letter-spacing:0.1em; text-transform:uppercase;
+  color: var(--role-manager); margin-bottom: 14px;
+}
+.current-banner .dot{ width:6px; height:6px; border-radius:50%; background: var(--role-manager); animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse{ 0%,100%{opacity:.5} 50%{opacity:1} }
+
+.week-card{
+  display:block; width:100%; text-align:left;
+  background: var(--bg-surface); border:1px solid var(--border); border-radius: var(--radius-lg);
+  padding: 22px 26px; margin-bottom:14px; cursor:pointer;
+  transition: border-color .18s, transform .18s, box-shadow .18s;
+  font-family: inherit; color: inherit; position: relative;
+}
+.week-card:hover{ border-color: var(--accent-border); transform: translateY(-2px); box-shadow: 0 14px 28px rgba(0,0,0,0.3); }
+
+.week-card.featured{
+  border: 1px solid rgba(212,175,106,0.4);
+  background: linear-gradient(160deg, rgba(212,175,106,0.09), var(--bg-surface) 55%);
+  padding: 26px 28px;
+  box-shadow: 0 0 0 1px rgba(212,175,106,0.08), 0 18px 40px -12px rgba(212,175,106,0.18);
+}
+.week-card.featured::before{
+  content:""; position:absolute; top:0; left:24px; right:24px; height:1px;
+  background: linear-gradient(90deg, transparent, var(--gold-bright), transparent);
+}
+.week-card.featured:hover{
+  border-color: rgba(212,175,106,0.65);
+  box-shadow: 0 0 0 1px rgba(212,175,106,0.14), 0 22px 48px -10px rgba(212,175,106,0.28);
+  transform: translateY(-3px);
+}
+
+.week-card .wc-top{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px; gap:12px; flex-wrap:wrap; }
+.week-card .wc-period{ font-family: var(--font-display); font-weight:700; font-size:19px; }
+.week-card .wc-rank{ font-family: var(--font-mono); font-size:11.5px; color: var(--gold); white-space:nowrap; background: var(--gold-soft); padding:4px 10px; border-radius:100px; border: 1px solid rgba(212,175,106,0.25); }
+.week-card .wc-summary{ font-size:13.5px; color: var(--text-secondary); margin-bottom:18px; line-height:1.5; }
+
+.week-card .wc-meta{ display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap; padding-top:16px; border-top: 1px solid rgba(255,255,255,0.06); }
+.week-card .wc-meta-left{ display:flex; gap:18px; font-size:12px; color: var(--text-muted); align-items:center; flex-wrap:wrap; }
+.week-card .wc-meta-left.compact{ border-top:none; padding-top:0; }
+.week-card .wc-meta b{ color: var(--text-secondary); font-weight:600; }
+.week-card .wc-cta{
+  display:inline-flex; align-items:center; gap:6px;
+  font-size:12.5px; font-weight:600; color: var(--accent-hover);
+  white-space:nowrap;
+}
+.week-card.featured .wc-cta{ color: var(--gold-bright); }
+.week-card .wc-cta svg{ transition: transform .15s; }
+.week-card:hover .wc-cta svg{ transform: translateX(3px); }
+
+.week-card .wc-arrow{ position:absolute; top:24px; right:24px; color: var(--text-muted); transition: transform .15s, color .15s; }
+.week-card:hover .wc-arrow{ transform: translateX(3px); color: var(--accent-hover); }
+
+.empty-archive{ text-align:center; padding:40px 20px; color: var(--text-muted); border:1px dashed var(--border); border-radius: var(--radius-md); font-size:13.5px; }
+
+.detail-nav-row{ display:flex; justify-content:space-between; align-items:center; margin-bottom: 28px; padding-top: 28px; gap: 12px; }
+.week-jump-btn{
+  font-family: var(--font-mono); font-size:12px; color: var(--text-secondary);
+  background: var(--bg-surface); border:1px solid var(--border); border-radius:8px;
+  padding:8px 14px; cursor:pointer; transition: border-color .15s, color .15s;
+}
+.week-jump-btn:hover:not(:disabled){ border-color: var(--accent-border); color: var(--accent-hover); }
+.week-jump-btn:disabled{ opacity:0.3; cursor:default; }
+
+#view-detail{ display:none; }
+#view-archive{ display:none; }
+#view-archive.active, #view-detail.active{ display:block; }
+
+@media (max-width: 600px){
+  .wrap{ padding-left: 16px; padding-right: 16px; }
+  .stat-grid{ grid-template-columns: 1fr 1fr; }
+  .hero{ padding: 48px 16px 36px; }
+  .topnav{ padding: 14px 16px; }
+  .topnav .brand{ font-size:15px; }
+  .week-card{ padding: 18px 18px; }
+  .week-card .wc-top{ flex-direction:column; gap:4px; }
+  .week-card .wc-meta{ flex-wrap:wrap; gap:10px; }
+  .assistant{ padding: 18px 18px; }
+  .card{ padding: 18px 18px; }
+  .detail-nav-row{ gap:8px; }
+  .week-jump-btn{ font-size:11px; padding:8px 10px; flex:1; text-align:center; }
+  table{ font-size:13px; }
+}
+
+@media (max-width: 380px){
+  .stat-grid{ grid-template-columns: 1fr; }
+  .hero h1{ font-size: 32px; }
+}
+</style>
+</head>
+<body>
+
+<div class="topnav">
+  <button class="brand" onclick="showArchive()"><span class="mark"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0A0A0C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></span>Civil Results</button>
+  <button class="nav-back hidden" id="nav-back-btn" onclick="showArchive()">← К архиву итогов</button>
+  <a class="nav-id-link" href="https://civil-id.space" id="civil-id-link">Civil ID</a>
+</div>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="eyebrow"><span class="dot"></span>Civil Team · Итоги работы</div>
+    <h1 id="hero-title">Civil Results</h1>
+    <div class="subtitle" id="hero-subtitle">Еженедельные итоги цивильного сегмента — статистика, лучшие ассистенты, история результатов.</div>
+  </div>
+</div>
+
+<div class="wrap content">
+
+  <div id="view-archive">
+    <section id="featured-section"></section>
+    <section>
+      <div class="section-head"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="5" rx="1"/><path d="M4 9v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9"/><path d="M10 13h4"/></svg></span><h2>Архив итогов</h2><div class="rule"></div></div>
+      <div id="archive-list"></div>
+    </section>
+    <section>
+      <div class="section-head"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></span><h2>Общая статистика</h2><div class="rule"></div></div>
+      <div class="stat-grid" id="overall-stats"></div>
+    </section>
+  </div>
+
+  <div id="view-detail">
+    <div class="detail-nav-row">
+      <button class="week-jump-btn" id="prev-week-btn">← Предыдущая неделя</button>
+      <button class="week-jump-btn" id="next-week-btn">Следующая неделя →</button>
+    </div>
+    <section id="detail-personnel"></section>
+    <section id="detail-workspace"></section>
+    <section id="detail-gameplay"></section>
+    <section id="detail-assistants"></section>
+    <section id="detail-summary"></section>
+  </div>
+
+  <footer class="site-footer">CIVIL TEAM — CIVIL RESULTS</footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  let RESULTS = [];
+  let CURRENT_WEEK_ID = null;
+
+  const supabaseClient = window.supabase.createClient(
+      "https://jdrepnjvvyzaiohihvvw.supabase.co", 
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpkcmVwbmp2dnl6YWlvaGlodnZ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE3MDczODUsImV4cCI6MjA5NzI4MzM4NX0.Byex7T_qRiiVBmFMD3QeS8tALx5k1ZIV34O2QDrjjbI"
+  );
+
+  function md(s) {
+    return (s || '').replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+  }
+
+  function formatPeriodShort(periodLabel) {
+    const m = periodLabel.match(/(\d{1,2})\s+(\S+)\s*—\s*(\d{1,2})\s+(\S+)/);
+    if (!m) return periodLabel;
+    const months = {
+      'января':'01','февраля':'02','марта':'03','апреля':'04','мая':'05','июня':'06',
+      'июля':'07','августа':'08','сентября':'09','октября':'10','ноября':'11','декабря':'12'
+    };
+    const m1 = months[m[2].toLowerCase()] || '??';
+    const m2 = months[m[4].toLowerCase()] || '??';
+    return `${m[1].padStart(2,'0')}.${m1} – ${m[3].padStart(2,'0')}.${m2}`;
+  }
+
+  function medalSvg(rank) {
+    const color = rank === 'gold' ? 'var(--gold-bright)' : rank === 'silver' ? 'var(--silver)' : rank === 'bronze' ? 'var(--bronze)' : 'currentColor';
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;"><path d="M7.21 15 2.66 7.14a2 2 0 0 1 .13-2.2L4.4 2.8A2 2 0 0 1 6 2h12a2 2 0 0 1 1.6.8l1.6 2.14a2 2 0 0 1 .14 2.2L16.79 15"/><path d="M11 12 5.12 2.2"/><path d="m13 12 5.88-9.8"/><path d="M8 7h8"/><circle cx="12" cy="17" r="5"/></svg>`;
+  }
+
+  function rankBadgeText(rank) {
+    return rank === 'gold' ? medalSvg('gold') + ' наибольшее BWC' : rank === 'silver' ? medalSvg('silver') + ' среднее BWC' : rank === 'bronze' ? medalSvg('bronze') + ' меньшее BWC' : '';
+  }
+
+  function renderArchive() {
+    const featured = RESULTS.find(r => r.id === CURRENT_WEEK_ID) || RESULTS[0];
+    const rest = RESULTS.filter(r => !featured || r.id !== featured.id);
+
+    const fSection = document.getElementById('featured-section');
+    if (featured) {
+      const topAssistant = featured.assistants.find(a => a.rank === 'gold');
+      fSection.innerHTML = `
+        <div class="current-banner"><span class="dot"></span>Актуальные итоги</div>
+        <div class="week-card featured" onclick="openWeek('${featured.id}')">
+          <div class="wc-top">
+            <span class="wc-period">${featured.periodLabel}</span>
+            ${featured.rankAmongSegments ? `<span class="wc-rank">${featured.rankAmongSegments} результат сегмента</span>` : ''}
+          </div>
+          <div class="wc-summary">${md(featured.summary)}</div>
+          <div class="wc-meta">
+            <div class="wc-meta-left">
+              <span><b>${featured.segmentBudget}</b> BWC сегмент</span>
+              ${topAssistant ? `<span>${medalSvg('gold')} <b>${topAssistant.name}</b></span>` : ''}
+            </div>
+            <span class="wc-cta">Подробнее<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </div>
+        </div>
+      `;
+    } else {
+      fSection.innerHTML = '';
+    }
+
+    const listEl = document.getElementById('archive-list');
+    if (rest.length === 0) {
+      listEl.innerHTML = `<div class="empty-archive">Пока в архиве пусто — здесь появятся прошлые недели по мере публикации новых итогов.</div>`;
+    } else {
+      listEl.innerHTML = rest.map(r => {
+        const top = r.assistants.find(a => a.rank === 'gold');
+        return `
+          <div class="week-card" onclick="openWeek('${r.id}')">
+            <span class="wc-arrow"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+            <div class="wc-top">
+              <span class="wc-period">${formatPeriodShort(r.periodLabel)}</span>
+              ${r.rankAmongSegments ? `<span class="wc-rank">${r.rankAmongSegments} среди сегментов</span>` : ''}
+            </div>
+            <div class="wc-meta-left compact">
+              <span><b>${r.segmentBudget}</b> BWC</span>
+              ${top ? `<span>${medalSvg('gold')} <b>${top.name}</b></span>` : ''}
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    const totalBwc = RESULTS.reduce((sum, r) => sum + (r.segmentBudget || 0), 0);
+    const goldCounts = {};
+    RESULTS.forEach(r => {
+      const g = r.assistants.find(a => a.rank === 'gold');
+      if (g) goldCounts[g.name] = (goldCounts[g.name] || 0) + 1;
+    });
+    const sortedPerformers = Object.entries(goldCounts).sort((a,b) => b[1]-a[1]);
+    const topPerformer = sortedPerformers.length > 0 ? sortedPerformers[0] : null;
+
+    document.getElementById('overall-stats').innerHTML = `
+      <div class="stat-box"><div class="v">${RESULTS.length}</div><div class="l">недель опубликовано</div></div>
+      <div class="stat-box"><div class="v">${totalBwc}</div><div class="l">всего BWC выдано</div></div>
+      <div class="stat-box"><div class="v">${topPerformer ? topPerformer[0] : '—'}</div><div class="l">лидер по золоту${topPerformer ? ' (' + topPerformer[1] + ')' : ''}</div></div>
+    `;
+  }
+
+  function renderDetail(week) {
+    document.getElementById('hero-title').textContent = week.periodLabel.split('—')[0].trim() + ' — итоги недели';
+    document.getElementById('hero-subtitle').textContent = week.summary;
+    document.getElementById('nav-back-btn').classList.remove('hidden');
+
+    document.getElementById('detail-personnel').innerHTML = week.personnelChanges ? `
+      <div class="section-head"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><h2>Кадровые изменения</h2><div class="rule"></div></div>
+      <div class="card">
+        <p>${md(week.personnelChanges.text)}</p>
+        ${week.personnelChanges.note ? `<div class="note">${md(week.personnelChanges.note)}</div>` : ''}
+      </div>` : '';
+
+    document.getElementById('detail-workspace').innerHTML = (week.workspaceStats && week.workspaceStats.length) ? `
+      <div class="section-head"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="20" y2="10"/><line x1="18" x2="18" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="16"/></svg></span><h2>Workspace и статистика</h2><div class="rule"></div></div>
+      <div class="stat-grid">
+        ${week.workspaceStats.map(s => `<div class="stat-box"><div class="v">${s.value === '✓' ? '<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--gold-bright)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-4px;"><polyline points="20 6 9 17 4 12"/></svg>' : escapeHtml(s.value)}</div><div class="l">${escapeHtml(s.label)}</div></div>`).join('')}
+      </div>` : '';
+
+    document.getElementById('detail-gameplay').innerHTML = (week.gameplayPoints && week.gameplayPoints.length) ? `
+      <div class="section-head"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="10" y1="11" y2="11"/><line x1="8" x2="8" y1="9" y2="13"/><line x1="15" x2="15.01" y1="12" y2="12"/><line x1="18" x2="18.01" y1="10" y2="10"/><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.544-.604-6.584-.685-7.258-.007-.05-.01-.1-.017-.152A4 4 0 0 0 17.32 5Z"/></svg></span><h2>Раздел и игровая часть</h2><div class="rule"></div></div>
+      <div class="card">
+        <ul class="points">${week.gameplayPoints.map(p => `<li>${md(p)}</li>`).join('')}</ul>
+      </div>` : '';
+
+    const maxBwc = week.maxPerAssistant || Math.max(...week.assistants.map(a => a.bwc), 1);
+    document.getElementById('detail-assistants').innerHTML = (week.assistants && week.assistants.length) ? `
+      <div class="section-head"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span><h2>Итоги по ассистентам</h2><div class="rule"></div></div>
+      ${week.assistants.map(a => `
+        <div class="assistant ${a.rank || ''}">
+          <div class="a-head"><span class="a-name">${escapeHtml(a.name)}</span><span class="a-rank">${a.rankLabel || rankBadgeText(a.rank)}</span></div>
+          <p class="a-text">${md(a.text)}</p>
+          <div class="bwc-bar-track"><div class="bwc-bar-fill" style="width:${Math.min(100, Math.round(a.bwc / maxBwc * 100))}%"></div></div>
+          <div class="bwc-label"><span>из ${maxBwc} макс.</span><span class="amt">${a.bwc} BWC</span></div>
+        </div>
+      `).join('')}` : '';
+
+    const totalDistributed = week.assistants.reduce((s, a) => s + a.bwc, 0);
+    document.getElementById('detail-summary').innerHTML = (week.assistants && week.assistants.length) ? `
+      <div class="section-head"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg></span><h2>Сводка по BWC</h2><div class="rule"></div></div>
+      <div class="card">
+        <table>
+          <thead><tr><th>Ассистент</th><th style="text-align:right">BWC</th></tr></thead>
+          <tbody>
+            ${week.assistants.map(a => `<tr><td>${escapeHtml(a.name)}</td><td class="num">${a.bwc}</td></tr>`).join('')}
+            <tr><td>Итого распределено / бюджет сегмента</td><td class="num">${totalDistributed} / ${week.segmentBudget}</td></tr>
+          </tbody>
+        </table>
+      </div>` : '';
+
+    const idx = RESULTS.findIndex(r => r.id === week.id);
+    const prevWeek = RESULTS[idx + 1];
+    const nextWeek = RESULTS[idx - 1];
+    const prevBtn = document.getElementById('prev-week-btn');
+    const nextBtn = document.getElementById('next-week-btn');
+    prevBtn.disabled = !prevWeek;
+    nextBtn.disabled = !nextWeek;
+    prevBtn.onclick = () => prevWeek && openWeek(prevWeek.id);
+    nextBtn.onclick = () => nextWeek && openWeek(nextWeek.id);
+  }
+
+  function escapeHtml(str) {
+      if (typeof str !== 'string') return '';
+      const div = document.createElement('div');
+      div.textContent = str || '';
+      return div.innerHTML;
+  }
+
+  function showArchive() {
+    document.getElementById('view-archive').classList.add('active');
+    document.getElementById('view-detail').classList.remove('active');
+    document.getElementById('nav-back-btn').classList.add('hidden');
+    document.getElementById('hero-title').textContent = 'Civil Results';
+    document.getElementById('hero-subtitle').textContent = 'Еженедельные итоги цивильного сегмента — статистика, лучшие ассистенты, история результатов.';
+    history.replaceState(null, '', window.location.pathname);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function openWeek(id) {
+    const week = RESULTS.find(r => r.id === id);
+    if (!week) return showArchive();
+    document.getElementById('view-archive').classList.remove('active');
+    document.getElementById('view-detail').classList.add('active');
+    renderDetail(week);
+    history.replaceState(null, '', `#week=${id}`);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function initFromHash() {
+    const match = window.location.hash.match(/week=([\d-]+)/);
+    if (match && RESULTS.find(r => r.id === match[1])) {
+      openWeek(match[1]);
+    } else {
+      showArchive();
+    }
+  }
+
+  async function fetchResults() {
+      const { data, error } = await supabaseClient
+          .from('weekly_results')
+          .select('*')
+          .order('id', { ascending: false });
+
+      if (error) {
+          console.error("Ошибка загрузки итогов:", error);
+          document.getElementById('archive-list').innerHTML = `<div class="empty-archive" style="color:var(--danger)">Ошибка загрузки с сервера.</div>`;
+          return;
+      }
+
+      RESULTS = data.map(row => ({
+          id: row.id,
+          periodLabel: row.period_label,
+          segmentBudget: row.segment_budget,
+          maxPerAssistant: row.max_per_assistant,
+          rankAmongSegments: row.rank_among_segments,
+          summary: row.summary,
+          personnelChanges: row.personnel_text ? { text: row.personnel_text, note: row.personnel_note } : null,
+          workspaceStats: row.workspace_stats || [],
+          gameplayPoints: row.gameplay_points || [],
+          assistants: row.assistants || []
+      }));
+
+      const current = data.find(r => r.is_current);
+      CURRENT_WEEK_ID = current ? current.id : (RESULTS.length > 0 ? RESULTS[0].id : null);
+
+      renderArchive();
+      initFromHash();
+  }
+
+  fetchResults();
+  window.addEventListener('hashchange', initFromHash);
+</script>
+
+</body>
+</html>
