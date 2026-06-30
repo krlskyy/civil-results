@@ -301,7 +301,9 @@ footer.site-footer{ text-align:center; margin-top:56px; padding-bottom: 56px; co
   );
 
   function md(s) {
-    return (s || '').replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+    // Сначала экранируем всё содержимое (защита от XSS из данных формы),
+    // затем применяем минимальный markdown — **bold**
+    return escapeHtml(s || '').replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
   }
 
   function formatPeriodShort(periodLabel) {
@@ -336,14 +338,14 @@ footer.site-footer{ text-align:center; margin-top:56px; padding-bottom: 56px; co
         <div class="current-banner"><span class="dot"></span>Актуальные итоги</div>
         <div class="week-card featured" onclick="openWeek('${featured.id}')">
           <div class="wc-top">
-            <span class="wc-period">${featured.periodLabel}</span>
-            ${featured.rankAmongSegments ? `<span class="wc-rank">${featured.rankAmongSegments} результат сегмента</span>` : ''}
+            <span class="wc-period">${escapeHtml(featured.periodLabel)}</span>
+            ${featured.rankAmongSegments ? `<span class="wc-rank">${escapeHtml(featured.rankAmongSegments)} результат сегмента</span>` : ''}
           </div>
           <div class="wc-summary">${md(featured.summary)}</div>
           <div class="wc-meta">
             <div class="wc-meta-left">
               <span><b>${featured.segmentBudget}</b> BWC сегмент</span>
-              ${topAssistant ? `<span>${medalSvg('gold')} <b>${topAssistant.name}</b></span>` : ''}
+              ${topAssistant ? `<span>${medalSvg('gold')} <b>${escapeHtml(topAssistant.name)}</b></span>` : ''}
             </div>
             <span class="wc-cta">Подробнее<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
           </div>
@@ -363,12 +365,12 @@ footer.site-footer{ text-align:center; margin-top:56px; padding-bottom: 56px; co
           <div class="week-card" onclick="openWeek('${r.id}')">
             <span class="wc-arrow"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
             <div class="wc-top">
-              <span class="wc-period">${formatPeriodShort(r.periodLabel)}</span>
-              ${r.rankAmongSegments ? `<span class="wc-rank">${r.rankAmongSegments} среди сегментов</span>` : ''}
+              <span class="wc-period">${escapeHtml(formatPeriodShort(r.periodLabel))}</span>
+              ${r.rankAmongSegments ? `<span class="wc-rank">${escapeHtml(r.rankAmongSegments)} среди сегментов</span>` : ''}
             </div>
             <div class="wc-meta-left compact">
               <span><b>${r.segmentBudget}</b> BWC</span>
-              ${top ? `<span>${medalSvg('gold')} <b>${top.name}</b></span>` : ''}
+              ${top ? `<span>${medalSvg('gold')} <b>${escapeHtml(top.name)}</b></span>` : ''}
             </div>
           </div>`;
       }).join('');
@@ -386,7 +388,7 @@ footer.site-footer{ text-align:center; margin-top:56px; padding-bottom: 56px; co
     document.getElementById('overall-stats').innerHTML = `
       <div class="stat-box"><div class="v">${RESULTS.length}</div><div class="l">недель опубликовано</div></div>
       <div class="stat-box"><div class="v">${totalBwc}</div><div class="l">всего BWC выдано</div></div>
-      <div class="stat-box"><div class="v">${topPerformer ? topPerformer[0] : '—'}</div><div class="l">лидер по золоту${topPerformer ? ' (' + topPerformer[1] + ')' : ''}</div></div>
+      <div class="stat-box"><div class="v">${topPerformer ? escapeHtml(topPerformer[0]) : '—'}</div><div class="l">лидер по золоту${topPerformer ? ' (' + topPerformer[1] + ')' : ''}</div></div>
     `;
   }
 
